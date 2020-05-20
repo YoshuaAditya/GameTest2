@@ -1,8 +1,5 @@
 package com.iboy.game.objects;
 
-import android.util.Log;
-
-import com.iboy.game.handlers.RotationHandler;
 import com.iboy.game.main.AppConstants;
 
 public class Laser {

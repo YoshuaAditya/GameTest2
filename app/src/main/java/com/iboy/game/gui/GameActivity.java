@@ -1,8 +1,6 @@
 package com.iboy.game.gui;
 
 import com.iboy.game.main.AppConstants;
-import com.iboy.game.handlers.RotationHandler;
-import com.iboy.game.objects.FingerAim;
 import com.iboy.game.views.GameView;
 import android.app.Activity;
 import android.os.Bundle;
@@ -26,11 +24,11 @@ public class GameActivity extends Activity {
     }
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) 
+	public boolean onTouchEvent(MotionEvent event)
 	{
 		 super.onTouchEvent(event);
 		int action = event.getAction();
-		switch (action) 
+		switch (action)
 		{
 			case MotionEvent.ACTION_DOWN:
 			{
@@ -51,42 +49,23 @@ public class GameActivity extends Activity {
 		}
 		return false;
 	}
-	
+
 	/*activates on touch move event*/
-	private void OnActionMove(MotionEvent event) 
+	private void OnActionMove(MotionEvent event)
 	{
 		int x = (int)event.getX();
 		int y = (int)event.getY();
-		
-		if(GetIfTouchInTheZone(x, y))
-		{
-			 AppConstants.GetEngine().SetCannonRotaion(x, y);
-		}
-		
+
 		AppConstants.GetEngine().SetLastTouch(event.getX(), event.getY());
 	}
 
 
-	private boolean GetIfTouchInTheZone(int x, int y) 
-	{
-		return RotationHandler.CheckIfTouchIsInTheZone(x,y,  AppConstants.GetEngine().getCannon());
-	}
-	
 	/*activates on touch up event*/
-	private void OnActionUp(MotionEvent event) 
+	private void OnActionUp(MotionEvent event)
 	{
 		int x = (int)event.getX();
 		int y = (int)event.getY();
-		
-		if(GetIfTouchInTheZone(x, y))
-		{
-			 AppConstants.GetEngine().SetCannonRotaion(x, y);
-			
-			 AppConstants.GetEngine().SetLastTouch(FingerAim.DO_NOT_DRAW_X,
-					FingerAim.DO_NOT_DRAW_Y);
-			
-			 AppConstants.GetEngine().CreateNewBubble(x,y);
-		}
+
 	}
 	/*activates on touch down event*/
 	private void OnActionDown(MotionEvent event) 
