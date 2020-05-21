@@ -1,0 +1,143 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:ignore="MergeRootFrame">
+
+
+        <SurfaceView
+            android:id="@+id/gameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/bottomBox"
+            app:layout_constraintEnd_toStartOf="@id/rightBox"
+            app:layout_constraintStart_toEndOf="@id/leftBox"
+            app:layout_constraintTop_toBottomOf="@id/upperBox" />
+
+        <LinearLayout
+            android:id="@+id/leftBox"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/container"
+            app:layout_constraintStart_toStartOf="@id/container"
+            app:layout_constraintTop_toTopOf="@id/container">
+
+            <Button
+                android:id="@+id/moveUp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/button_large"
+                android:layout_height="@dimen/button_large"
+                android:text="Up" />
+
+            <Button
+                android:id="@+id/moveDown"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/button_large"
+                android:layout_height="@dimen/button_large"
+                android:text="down" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/upperBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:minHeight="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/rightBox"
+            app:layout_constraintStart_toEndOf="@id/leftBox"
+            app:layout_constraintTop_toTopOf="@id/container">
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rightBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/container"
+            app:layout_constraintEnd_toEndOf="@id/container"
+            app:layout_constraintTop_toTopOf="@id/container">
+
+            <Button
+                android:id="@+id/buttonShoot"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/button_large"
+                android:layout_height="@dimen/button_large"
+                android:text="Shoot" />
+
+            <Button
+                android:id="@+id/buttonPause"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="@dimen/button_large"
+                android:layout_height="@dimen/button_large"
+                android:text="Pause" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/container"
+            app:layout_constraintEnd_toStartOf="@id/rightBox"
+            app:layout_constraintStart_toEndOf="@id/leftBox">
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/pauseScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textPaused"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paused" />
+
+        <Button
+            android:id="@+id/bResume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resume" />
+
+        <Button
+            android:id="@+id/bQuit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quit" />
+
+
+    </LinearLayout>
+
+</FrameLayout>
+

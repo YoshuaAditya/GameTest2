@@ -4,4 +4,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="button_large">72dp</dimen>
+    <dimen name="button_medium">60dp</dimen>
+    <dimen name="button_small">42dp</dimen>
+    <dimen name="spacing_button_large">12dp</dimen>
+    <dimen name="spacing_button_medium">24dp</dimen>
+    <dimen name="spacing_button_small">36dp</dimen>
+
+
 </resources>

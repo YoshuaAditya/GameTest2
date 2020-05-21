@@ -28,7 +28,7 @@ public class AppConstants
 	{
 		_bitmapsBank = new BitmapBank(context.getResources());
 	    SetScreenSize(context); 
-	    _engine = new GameEngine();
+	    _engine = new GameEngine(context);
 	}
 
 

@@ -7,14 +7,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Responsible for screen painting.
  */
 public class DisplayThread extends Thread {
     SurfaceHolder _surfaceHolder;
     Paint _backgroundPaint;
-
-    long _sleepTime;
+    Semaphore semaphore;
 
     //Delay amount between screen refreshes
     final long FPS = 60;
@@ -25,6 +26,7 @@ public class DisplayThread extends Thread {
 
     public DisplayThread(SurfaceHolder surfaceHolder, Context context) {
         _surfaceHolder = surfaceHolder;
+        semaphore=new Semaphore(1);
 
         //black painter below to clear the screen before the game is rendered
         _backgroundPaint = new Paint();
@@ -45,6 +47,13 @@ public class DisplayThread extends Thread {
 
         //Looping until the boolean is false
         while (_isOnRun) {
+
+            //semaphore.acquire used to mark the beginning part of code needs to be stopped
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             //Updates the game objects buisiness logic
             AppConstants.GetEngine().Update();
 
@@ -71,6 +80,8 @@ public class DisplayThread extends Thread {
             } catch (InterruptedException ex) {
                 //TODO: Log
             }
+            //semaphore.release used to mark end part of code needs to be stopped
+            semaphore.release();
         }
     }
 

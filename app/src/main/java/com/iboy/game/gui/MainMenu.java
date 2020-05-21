@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.iboy.game.R;
+import com.iboy.game.main.AppConstants;
 
 public class MainMenu extends Activity implements View.OnClickListener {
 
@@ -30,7 +31,6 @@ public class MainMenu extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.e("hey",v.toString());
         switch (v.getId()){
             case R.id.bStartGame: startActivity(new Intent(this,GameActivity.class));
         }

@@ -1,28 +1,43 @@
 package com.iboy.game.gui;
 
+import com.iboy.game.R;
 import com.iboy.game.main.AppConstants;
-import com.iboy.game.views.GameView;
+import com.iboy.game.objects.DisplayThread;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements SurfaceHolder.Callback{
 
-	GameView _gameEngineView;
+	Context context;
+	SurfaceView view;
+	private DisplayThread _displayThread;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-        
-        //sets the activity view as GameView class
-        SurfaceView view = new GameView(this, AppConstants.GetEngine());
-        setContentView(view);
+		setContentView(R.layout.game_activity);
 
-//        getActionBar().hide();
+		context=this;
+
+		//getting surface holder from the layout
+		view=findViewById(R.id.gameView);
+		SurfaceHolder holder = view.getHolder();
+		holder.addCallback(this);
+
+		_displayThread = new DisplayThread(holder, context);
+		view.setFocusable(true);
+
+		//pass GameActivity into GameEngine, mainly for buttons
+		AppConstants.GetEngine().setActivityContext(context, _displayThread);
     }
 
+    //Handles touch event in game screen
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
@@ -70,7 +85,36 @@ public class GameActivity extends Activity {
 	/*activates on touch down event*/
 	private void OnActionDown(MotionEvent event) 
 	{
+
 		 AppConstants.GetEngine().SetLastTouch(event.getX(), event.getY());
 	}
 
+	@Override
+	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
+	{
+		/*DO NOTHING*/
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder arg0)
+	{
+		//Stop the display thread
+		_displayThread.SetIsRunning(false);
+		AppConstants.StopThread(_displayThread);
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder arg0)
+	{
+		//Starts the display thread
+		if(!_displayThread.IsRunning())
+		{
+			_displayThread = new DisplayThread(view.getHolder(), context);
+			_displayThread.start();
+		}
+		else
+		{
+			_displayThread.start();
+		}
+	}
 }
