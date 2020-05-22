@@ -32,7 +32,7 @@ public class DisplayThread extends Thread {
     final long LAG_PERIOD = 8;
     final long DELAY = 4;
 
-    boolean _isOnRun;
+    public boolean _isOnRun;
 
     public DisplayThread(SurfaceHolder surfaceHolder, Context context) {
         _surfaceHolder = surfaceHolder;
@@ -61,7 +61,7 @@ public class DisplayThread extends Thread {
         //Looping until the boolean is false
         while (_isOnRun) {
 
-            Log.e("Resume"," Semaphore "+semaphore);
+//            Log.e("Resume"," Semaphore "+semaphore);
             //semaphore.acquire used to mark the beginning part of code needs to be stopped
             try {
                 semaphore.acquire();

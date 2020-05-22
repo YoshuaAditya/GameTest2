@@ -145,12 +145,19 @@ public class GameEngine {
         buttonResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //if there are stopped threads, make them continue
                 displayThread.semaphore.release();
                 activity.pauseScreen.setVisibility(View.INVISIBLE);
                 isPaused = false;
-                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
+            }
+        });
+        Button buttonQuit = activity.findViewById(R.id.bQuit);
+        buttonQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayThread.semaphore.release();
+                isPaused = false;
+                activity.finish();
             }
         });
     }
