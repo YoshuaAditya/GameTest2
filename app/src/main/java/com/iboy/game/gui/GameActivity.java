@@ -130,16 +130,17 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback{
 		}
 	}
 
-	@Override
-	protected void onStop() {
-		try {
-			AppConstants.GetEngine().displayThread.semaphore.acquire();
-			pauseScreen.setVisibility(View.VISIBLE);
-			AppConstants.GetEngine().isPaused = true;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		super.onStop();
-	}
+//	@Override
+//	protected void onStop() {
+//        //TODO sek error klo home thread e jadi beda, perlu nyimpen thread lama, berubah e sek blm tahu dimana, bukan di lifecycle setidake
+//        try {
+//			AppConstants.GetEngine().displayThread.semaphore.acquire();
+//			pauseScreen.setVisibility(View.VISIBLE);
+//			AppConstants.GetEngine().isPaused = true;
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		super.onStop();
+//	}
 
 }

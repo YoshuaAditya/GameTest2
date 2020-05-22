@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class DisplayThread extends Thread {
         //Looping until the boolean is false
         while (_isOnRun) {
 
+            Log.e("Resume"," Semaphore "+semaphore);
             //semaphore.acquire used to mark the beginning part of code needs to be stopped
             try {
                 semaphore.acquire();

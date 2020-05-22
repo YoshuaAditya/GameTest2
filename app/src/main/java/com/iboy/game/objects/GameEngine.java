@@ -177,6 +177,7 @@ public class GameEngine {
         //TODO skor,coba opsi + button\
         updateLife();
         updateScore();
+        setButtons();
     }
 
     void updateScore() {
