@@ -3,11 +3,13 @@ package com.iboy.game.objects;
 import android.os.Handler;
 import android.util.Log;
 
+import com.iboy.game.gui.GameActivity;
 import com.iboy.game.main.AppConstants;
 
 public class Enemy {
     int x, y;
-    double speed=1;
+    int enemySize=4;
+    double speed=10;
     boolean willHit=false;
 
     public Enemy(int x, int y) {
@@ -16,9 +18,10 @@ public class Enemy {
     }
 
     public void checkXPosition(){
-        if(x==0){
+        if(x<0){
             GameEngine.enemyRemoveList.add(Enemy.this);
-            Log.e("Enemy bypass","yep");
+            GameEngine.damage++;
+//            Log.e("Enemy bypass","yep");
         }
     }
 }

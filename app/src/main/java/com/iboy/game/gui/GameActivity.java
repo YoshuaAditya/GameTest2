@@ -3,6 +3,8 @@ package com.iboy.game.gui;
 import com.iboy.game.R;
 import com.iboy.game.main.AppConstants;
 import com.iboy.game.objects.DisplayThread;
+import com.iboy.game.objects.GameEngine;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,15 +12,21 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.Locale;
+import java.util.concurrent.Semaphore;
 
 public class GameActivity extends Activity implements SurfaceHolder.Callback{
 
 	Context context;
 	SurfaceView view;
-	private DisplayThread _displayThread;
-	
+	public TextView textScore, textLife, textLevel;
+	private DisplayThread displayThread;
+	public View pauseScreen;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) 
+    protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_activity);
@@ -27,14 +35,18 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback{
 
 		//getting surface holder from the layout
 		view=findViewById(R.id.gameView);
+		textLife = findViewById(R.id.life);
+		textScore = findViewById(R.id.score);
+		textLevel = findViewById(R.id.level);
+		pauseScreen = findViewById(R.id.pauseScreen);
 		SurfaceHolder holder = view.getHolder();
 		holder.addCallback(this);
 
-		_displayThread = new DisplayThread(holder, context);
+		displayThread = new DisplayThread(holder, context);
 		view.setFocusable(true);
 
 		//pass GameActivity into GameEngine, mainly for buttons
-		AppConstants.GetEngine().setActivityContext(context, _displayThread);
+		AppConstants.GetEngine().setActivityContext(context, displayThread);
     }
 
     //Handles touch event in game screen
@@ -83,7 +95,7 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback{
 
 	}
 	/*activates on touch down event*/
-	private void OnActionDown(MotionEvent event) 
+	private void OnActionDown(MotionEvent event)
 	{
 
 		 AppConstants.GetEngine().SetLastTouch(event.getX(), event.getY());
@@ -99,22 +111,35 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback{
 	public void surfaceDestroyed(SurfaceHolder arg0)
 	{
 		//Stop the display thread
-		_displayThread.SetIsRunning(false);
-		AppConstants.StopThread(_displayThread);
+		displayThread.SetIsRunning(false);
+		AppConstants.StopThread(displayThread);
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0)
 	{
 		//Starts the display thread
-		if(!_displayThread.IsRunning())
+		if(!displayThread.IsRunning())
 		{
-			_displayThread = new DisplayThread(view.getHolder(), context);
-			_displayThread.start();
+			displayThread = new DisplayThread(view.getHolder(), context);
+			displayThread.start();
 		}
 		else
 		{
-			_displayThread.start();
+			displayThread.start();
 		}
 	}
+
+	@Override
+	protected void onStop() {
+		try {
+			AppConstants.GetEngine().displayThread.semaphore.acquire();
+			pauseScreen.setVisibility(View.VISIBLE);
+			AppConstants.GetEngine().isPaused = true;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		super.onStop();
+	}
+
 }

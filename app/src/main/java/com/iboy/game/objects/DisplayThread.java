@@ -1,13 +1,19 @@
 package com.iboy.game.objects;
 
+import com.iboy.game.R;
 import com.iboy.game.main.AppConstants;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
+import android.widget.TextView;
 
+import java.util.Locale;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Responsible for screen painting.
@@ -15,7 +21,10 @@ import java.util.concurrent.Semaphore;
 public class DisplayThread extends Thread {
     SurfaceHolder _surfaceHolder;
     Paint _backgroundPaint;
-    Semaphore semaphore;
+    public Semaphore semaphore;
+    public ReentrantLock lock;
+    Activity activity;
+
 
     //Delay amount between screen refreshes
     final long FPS = 60;
@@ -27,12 +36,15 @@ public class DisplayThread extends Thread {
     public DisplayThread(SurfaceHolder surfaceHolder, Context context) {
         _surfaceHolder = surfaceHolder;
         semaphore=new Semaphore(1);
+        lock=new ReentrantLock();
+        activity=(Activity)context;
 
         //black painter below to clear the screen before the game is rendered
         _backgroundPaint = new Paint();
         _backgroundPaint.setARGB(255, 0, 0, 0);
         _isOnRun = true;
     }
+
 
     /**
      * This is the main nucleus of our program.

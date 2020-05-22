@@ -1,11 +1,14 @@
 package com.iboy.game.objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import com.iboy.game.R;
+import com.iboy.game.gui.GameActivity;
 import com.iboy.game.handlers.BitmapBank;
 import com.iboy.game.main.AppConstants;
 
@@ -18,9 +21,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 /*
  * Stores all object references that relevant for the game display
@@ -30,27 +35,27 @@ public class GameEngine {
     /*MEMBERS*/
     static List<Enemy> enemyList;
     static List<Bullet> bulletList;
-    static List<Enemy> enemyRemoveList=new ArrayList<>();
-    static List<Bullet> bulletRemoveList=new ArrayList<>();
+    static List<Enemy> enemyRemoveList = new ArrayList<>();
+    static List<Bullet> bulletRemoveList = new ArrayList<>();
+    static int damage = 0;
+    static int score = 0;
+    int level=1;
     static final Object _sync = new Object();
     static float _lastTouchedX = 100, _lastTouchedY = AppConstants.HALFSCREEN_HEIGHT;
     Player player = new Player();
 
-    private int maxEnemys = 100;
-    Handler removeEnemy = new Handler();
-
     Paint playerPaint = new Paint();
     Paint enemyPaint = new Paint();
-    Context activityContext;
-    Activity activity;
+    GameActivity activity;
 
     private Handler repeatUpdateHandler = new Handler();
     boolean down = false, up = false;
     private final int REPEAT_DELAY = 50;
+    public DisplayThread displayThread;
+    public boolean isPaused = false;
 
-    DisplayThread displayThread;
-    View pauseScreen;
-    boolean isPaused=false;
+    private int enemy_timer = 10;
+    private int enemy_delay = 10;
 
     public GameEngine(Context context) {
         enemyList = new LinkedList<Enemy>();
@@ -75,15 +80,14 @@ public class GameEngine {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setButtons() {
-        pauseScreen = activity.findViewById(R.id.pauseScreen);
         final Button buttonUp = activity.findViewById(R.id.moveUp);
         final Button buttonDown = activity.findViewById(R.id.moveDown);
         final Button buttonShoot = activity.findViewById(R.id.buttonShoot);
         buttonUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(!isPaused){
-                    switch (event.getAction() & MotionEvent.ACTION_MASK ) {
+                if (!isPaused) {
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
                         case MotionEvent.ACTION_DOWN:
                             down = true;
                             repeatUpdateHandler.postDelayed(new RepetitiveUpdater(), REPEAT_DELAY);
@@ -99,7 +103,7 @@ public class GameEngine {
         buttonDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(!isPaused) {
+                if (!isPaused) {
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
                         case MotionEvent.ACTION_DOWN:
                             up = true;
@@ -117,20 +121,22 @@ public class GameEngine {
         buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //acquire permit means the thread arent allowed to run
                 try {
                     displayThread.semaphore.acquire();
-                    pauseScreen.setVisibility(View.VISIBLE);
-                    isPaused=true;
+                    activity.pauseScreen.setVisibility(View.VISIBLE);
+                    isPaused = true;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
             }
         });
         buttonShoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isPaused) {
+                if (!isPaused) {
                     bulletList.add(new Bullet(player.x, player.y));
                 }
             }
@@ -139,36 +145,93 @@ public class GameEngine {
         buttonResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //if there are stopped threads, make them continue
                 displayThread.semaphore.release();
-                pauseScreen.setVisibility(View.INVISIBLE);
-                isPaused=false;
+                activity.pauseScreen.setVisibility(View.INVISIBLE);
+                isPaused = false;
+                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
             }
         });
     }
 
     Paint _paint;
-    //TODO kok masih aneh ya, shot kedua kyke salah dari log e, gk nampil dari 0-100, cuma 0 sing ditampilno
 
     /**
      * Updates all relevant objects business logic
      */
     public void Update() {
-        for (Bullet bullet : bulletList) {
+        for (int i = 0; i < bulletList.size(); i++) {
+            Bullet bullet = bulletList.get(i);
             bullet.checkHitbox();
         }
         bulletList.removeAll(bulletRemoveList);
-        bulletRemoveList=new ArrayList<>();
+        bulletRemoveList.clear();
         for (Enemy enemy : enemyList) {
             enemy.checkXPosition();
         }
         enemyList.removeAll(enemyRemoveList);
-        enemyRemoveList=new ArrayList<>();
+        enemyRemoveList.clear();
+        //TODO hmm, enaknya gmn ya, biarin spam shot tapi dibuat susah, apa consequence dari too many shots.
+        //TODO klo up down dipencet spesifik caranya, bisa nambah speed,cuma ini mau fitur apa bug
+        //TODO skor,coba opsi + button\
+        updateLife();
+        updateScore();
     }
 
+    void updateScore() {
+        if (score != 0) {
+            int currentScore = Integer.parseInt(activity.textScore.getText().toString());
+            final int updatedScore = currentScore + score;
+            score = 0;
+
+            //Win condition
+            if(updatedScore>100*level){
+                level++;
+                enemy_delay--;
+                if(enemy_delay<1){
+                    enemy_delay=1;
+                }
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        activity.textLevel.setText(String.format(Locale.ENGLISH, "%d", level));
+                    }
+                });
+            }
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    activity.textScore.setText(String.format(Locale.ENGLISH, "%d", updatedScore));
+                }
+            });
+        }
+    }
+
+    private void updateLife() {
+        if (damage != 0) {
+            int currentLife = Integer.parseInt(activity.textLife.getText().toString());
+            final int updatedLife = currentLife-damage;
+            damage = 0;
+
+            //Defeat condition
+            if(updatedLife<1){
+                activity.finish();
+            }
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    activity.textLife.setText(String.format(Locale.ENGLISH, "%d", updatedLife));
+                }
+            });
+        }
+    }
+
+
     public void setActivityContext(Context context, DisplayThread displayThread) {
-        activityContext = context;
-        activity = (Activity) context;
+        activity = (GameActivity) context;
         this.displayThread = displayThread;
 
         enemyList.clear();
@@ -191,11 +254,12 @@ public class GameEngine {
 
     private void DrawBullets(Canvas canvas) {
         synchronized (_sync) {
-            for (Bullet bullet : bulletList) {
+            for (int i = 0; i < bulletList.size(); i++) {
+                Bullet bullet = bulletList.get(i);
                 Rect rect = new Rect();
                 bullet.x += bullet.speed;
-                rect.set(bullet.x, bullet.y, bullet.x + 4, bullet.y + 4);
-                int color = ContextCompat.getColor(activityContext, R.color.white);
+                rect.set(bullet.x, bullet.y, bullet.x + bullet.bulletSize, bullet.y + bullet.bulletSize);
+                int color = ContextCompat.getColor(activity, R.color.white);
                 Paint bulletPaint = new Paint();
                 bulletPaint.setARGB(255, 255, 255, 255);
                 canvas.drawRect(rect, bulletPaint);
@@ -205,8 +269,8 @@ public class GameEngine {
 
     private void DrawPlayer(Canvas canvas) {
         Rect rect = new Rect();
-        rect.set(player.x, player.y, player.x + 4, player.y + 4);
-        int color = ContextCompat.getColor(activityContext, R.color.white);
+        rect.set(player.x, player.y, player.x + player.playerSize, player.y + player.playerSize);
+        int color = ContextCompat.getColor(activity, R.color.white);
 //        guardAreaPaint.setARGB(128, 255, 255, 255);
         playerPaint.setColor(color);
         canvas.drawRect(rect, playerPaint);
@@ -214,20 +278,21 @@ public class GameEngine {
 
     private void DrawEnemys(Canvas canvas) {
         //check how many enemys in field, create if its not max limit)
-        if (enemyList.size() < maxEnemys) {
+        enemy_timer--;
+        if (enemy_timer<1) {
             Random random = new Random();
             int randomY = random.nextInt(AppConstants.HALFSCREEN_HEIGHT) / 2;
             int finalRandomY = randomY * (random.nextBoolean() ? -1 : 1);
             enemyList.add(new Enemy(canvas.getWidth(), AppConstants.HALFSCREEN_HEIGHT - finalRandomY));
+            enemy_timer=enemy_delay;
         }
         //draw all enemys
         synchronized (_sync) {
-            //TODO Awas kmrn ada error concurrentmodificationexception disini, gk tahu kenapa itu
             for (Enemy enemy : enemyList) {
                 Rect rect = new Rect();
                 enemy.x -= enemy.speed;
-                rect.set(enemy.x, enemy.y, enemy.x + 4, enemy.y + 4);
-                int color = ContextCompat.getColor(activityContext, R.color.white);
+                rect.set(enemy.x, enemy.y, enemy.x + enemy.enemySize, enemy.y + enemy.enemySize);
+                int color = ContextCompat.getColor(activity, R.color.white);
                 enemyPaint.setARGB(128, 255, 255, 255);
                 canvas.drawRect(rect, enemyPaint);
             }
