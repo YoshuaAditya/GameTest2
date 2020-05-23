@@ -174,11 +174,13 @@ public class GameEngine {
     public void Update() {
         for (int i = 0; i < bulletList.size(); i++) {
             Bullet bullet = bulletList.get(i);
+            bullet.x += bullet.speed;
             bullet.checkHitbox();
         }
         bulletList.removeAll(bulletRemoveList);
         bulletRemoveList.clear();
         for (Enemy enemy : enemyList) {
+            enemy.x -= enemy.speed;
             enemy.checkXPosition();
         }
         enemyList.removeAll(enemyRemoveList);
@@ -269,7 +271,6 @@ public class GameEngine {
             for (int i = 0; i < bulletList.size(); i++) {
                 Bullet bullet = bulletList.get(i);
                 Rect rect = new Rect();
-                bullet.x += bullet.speed;
                 rect.set(bullet.x, bullet.y, bullet.x + bullet.bulletSize, bullet.y + bullet.bulletSize);
                 int color = ContextCompat.getColor(activity, R.color.white);
                 Paint bulletPaint = new Paint();
@@ -302,7 +303,6 @@ public class GameEngine {
         synchronized (_sync) {
             for (Enemy enemy : enemyList) {
                 Rect rect = new Rect();
-                enemy.x -= enemy.speed;
                 rect.set(enemy.x, enemy.y, enemy.x + enemy.enemySize, enemy.y + enemy.enemySize);
                 int color = ContextCompat.getColor(activity, R.color.white);
                 enemyPaint.setARGB(128, 255, 255, 255);

@@ -144,6 +144,7 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback {
         Log.e("Stop",AppConstants.GetEngine().displayThread.semaphore+"");
         AppConstants.GetEngine().displayThread._isOnRun = false;
         AppConstants.GetEngine().displayThread.semaphore.release();
+
         pauseScreen.setVisibility(View.VISIBLE);
         super.onPause();
     }
