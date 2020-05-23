@@ -8,4 +8,6 @@
     <string name="shop">Shop</string>
     <string name="customize">Customize</string>
     <string name="about">About</string>
+    <string name="resume">Resume</string>
+    <string name="quit">Quit</string>
 </resources>
