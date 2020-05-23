@@ -40,6 +40,19 @@
                 android:layout_height="@dimen/button_large"
                 android:text="Up" />
 
+            <io.github.controlwear.virtual.joystick.android.JoystickView
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/joystick"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                custom:JV_buttonColor="#FF6E40"
+                custom:JV_buttonSizeRatio="25%"
+                custom:JV_borderColor="#00796B"
+                custom:JV_backgroundSizeRatio="30%"
+                custom:JV_backgroundColor="#009688"
+                custom:JV_borderWidth="4dp"
+                custom:JV_fixedCenter="true"/>
+
             <Button
                 android:id="@+id/moveDown"
                 style="?android:attr/buttonBarButtonStyle"
@@ -93,7 +106,6 @@
             android:id="@+id/rightBox"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:minWidth="@dimen/activity_horizontal_margin"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@id/container"
@@ -101,18 +113,21 @@
             app:layout_constraintTop_toTopOf="@id/container">
 
             <Button
+                android:id="@+id/buttonPause"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_gravity="top"
+                android:layout_width="@dimen/button_large"
+                android:layout_height="@dimen/button_large"
+                android:text="Pause" />
+
+            <Button
                 android:id="@+id/buttonShoot"
                 style="?android:attr/buttonBarButtonStyle"
+                android:layout_gravity="center"
                 android:layout_width="@dimen/button_large"
                 android:layout_height="@dimen/button_large"
                 android:text="Shoot" />
 
-            <Button
-                android:id="@+id/buttonPause"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="@dimen/button_large"
-                android:layout_height="@dimen/button_large"
-                android:text="Pause" />
 
         </LinearLayout>
 

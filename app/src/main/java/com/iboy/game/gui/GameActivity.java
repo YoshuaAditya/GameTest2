@@ -152,6 +152,6 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback {
 
     @Override
     public void onBackPressed(){
-
+//        findViewById(R.id.buttonPause).callOnClick();
     }
 }

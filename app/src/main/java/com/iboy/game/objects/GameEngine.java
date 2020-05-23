@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import io.github.controlwear.virtual.joystick.android.JoystickView;
+
 /*
  * Stores all object references that relevant for the game display
  * Calls objects business logic methods, and draw them to the given Canvas from DisplayThread
@@ -121,7 +123,6 @@ public class GameEngine {
         buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //acquire permit means the thread arent allowed to run
                 try {
                     displayThread.semaphore.acquire();
@@ -130,7 +131,6 @@ public class GameEngine {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
             }
         });
         buttonShoot.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +158,16 @@ public class GameEngine {
                 displayThread.semaphore.release();
                 isPaused = false;
                 activity.finish();
+            }
+        });
+        final JoystickView joystick = activity.findViewById(R.id.joystick);
+        joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
+            @Override
+            public void onMove(int angle, int strength) {
+                double cos = Math.cos(angle * (Math.PI / 180.0));
+                double sin = Math.sin(angle * (Math.PI / 180.0));
+                player.x += cos * strength /30 * player.playerSpeed;
+                player.y -= sin * strength /30 * player.playerSpeed;
             }
         });
     }
