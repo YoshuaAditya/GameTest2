@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
+
 /*
  * Stores all object references that relevant for the game display
  * Calls objects business logic methods, and draw them to the given Canvas from DisplayThread
@@ -166,14 +167,24 @@ public class GameEngine {
                 activity.finish();
             }
         });
-        final JoystickView joystick = activity.findViewById(R.id.joystick);
+        Button buttonSpeed = activity.findViewById(R.id.buttonSpeed);
+        buttonSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                player.playerSpeed++;
+                if(player.playerSpeed==5)player.playerSpeed=1;
+            }
+        });
+        JoystickView joystick = activity.findViewById(R.id.joystick);
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                double cos = Math.cos(angle * (Math.PI / 180.0));
-                double sin = Math.sin(angle * (Math.PI / 180.0));
-                player.x += cos * strength /30 * player.playerSpeed;
-                player.y -= sin * strength /30 * player.playerSpeed;
+                if(!isPaused){
+                    double cos = Math.cos(angle * (Math.PI / 180.0));
+                    double sin = Math.sin(angle * (Math.PI / 180.0));
+                    player.x += cos * strength /30 * player.playerSpeed;
+                    player.y -= sin * strength /30 * player.playerSpeed;
+                }
             }
         });
     }

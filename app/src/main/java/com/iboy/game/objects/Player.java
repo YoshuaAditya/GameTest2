@@ -11,5 +11,6 @@ public class Player {
     public void reset() {
         x=100;
         y=AppConstants.HALFSCREEN_HEIGHT;
+        playerSpeed=1;
     }
 }

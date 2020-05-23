@@ -128,6 +128,14 @@
                 android:layout_height="@dimen/button_large"
                 android:text="Shoot" />
 
+            <Button
+                android:id="@+id/buttonSpeed"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/button_large"
+                android:layout_height="@dimen/button_large"
+                android:text="Speed" />
+
 
         </LinearLayout>
 
