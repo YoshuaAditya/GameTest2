@@ -113,7 +113,7 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder arg0) {
         //Condition when activity started from home button
-        if (AppConstants.GetEngine().isPaused) {
+        if (!displayThread.IsRunning()) {
             //Draw last situation of UI
             Paint backgroundPaint = new Paint();
             backgroundPaint.setARGB(255, 0, 0, 0);
@@ -124,29 +124,34 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback {
 
             //Replace old thread with new thread
             displayThread = new DisplayThread(view.getHolder(), context);
-            displayThread.start();
             try {
                 displayThread.semaphore.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            displayThread.start();
             AppConstants.GetEngine().isPaused = true;
             AppConstants.GetEngine().displayThread = displayThread;
-            return;
-        }
-
-        if (!displayThread.IsRunning()) {
-            displayThread = new DisplayThread(view.getHolder(), context);
-            displayThread.start();
+            Log.e("create1",AppConstants.GetEngine().displayThread.semaphore+"");
         } else {
             displayThread.start();
+            Log.e("create2",AppConstants.GetEngine().displayThread.semaphore+"");
         }
     }
 
     @Override
-    protected void onStop() {
+    protected void onPause() {
+        Log.e("Stop",AppConstants.GetEngine().displayThread.semaphore+"");
         AppConstants.GetEngine().displayThread._isOnRun = false;
+        AppConstants.GetEngine().displayThread.semaphore.release();
         pauseScreen.setVisibility(View.VISIBLE);
+        super.onPause();
+    }
+
+
+    @Override
+    protected void onStop() {
+//        Log.e("Stop",AppConstants.GetEngine().displayThread.semaphore+"");
         super.onStop();
     }
 

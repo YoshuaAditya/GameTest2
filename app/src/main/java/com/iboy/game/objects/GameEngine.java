@@ -121,6 +121,7 @@ public class GameEngine {
         buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isPaused) {
                 Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //acquire permit means the thread arent allowed to run
                 try {
@@ -131,6 +132,7 @@ public class GameEngine {
                     e.printStackTrace();
                 }
                 Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
+                }
             }
         });
         buttonShoot.setOnClickListener(new View.OnClickListener() {
@@ -145,10 +147,12 @@ public class GameEngine {
         buttonResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //if there are stopped threads, make them continue
                 displayThread.semaphore.release();
                 activity.pauseScreen.setVisibility(View.INVISIBLE);
                 isPaused = false;
+                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
             }
         });
         Button buttonQuit = activity.findViewById(R.id.bQuit);

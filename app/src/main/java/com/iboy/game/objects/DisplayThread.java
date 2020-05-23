@@ -60,8 +60,6 @@ public class DisplayThread extends Thread {
 
         //Looping until the boolean is false
         while (_isOnRun) {
-
-//            Log.e("Resume"," Semaphore "+semaphore);
             //semaphore.acquire used to mark the beginning part of code needs to be stopped
             try {
                 semaphore.acquire();
@@ -69,8 +67,7 @@ public class DisplayThread extends Thread {
                 e.printStackTrace();
             }
             //Updates the game objects buisiness logic
-            AppConstants.GetEngine().Update();
-
+                AppConstants.GetEngine().Update();
             //locking the canvas
             Canvas canvas = _surfaceHolder.lockCanvas(null);
             startTime = System.currentTimeMillis();
