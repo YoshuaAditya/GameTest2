@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Bullet {
     int x, y;
-    int bulletSize=2;
+    int bulletSize=3;
     double speed = 4;
     boolean willHit = false;
     Enemy targetEnemy;
@@ -47,7 +47,7 @@ public class Bullet {
             }
             lastIndex = GameEngine.enemyList.size();
         } else if (willHit) {
-            if(x>targetEnemy.x) {
+            if(x>targetEnemy.x&& x-targetEnemy.x<bulletSize*speed+targetEnemy.enemySize*targetEnemy.speed) {
 //                Log.e("Hit", Bullet.this.toString());
                 GameEngine.bulletRemoveList.add(Bullet.this);
                 GameEngine.enemyRemoveList.add(targetEnemy);

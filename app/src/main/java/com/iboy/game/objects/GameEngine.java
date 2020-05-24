@@ -1,7 +1,6 @@
 package com.iboy.game.objects;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -9,23 +8,19 @@ import java.util.Random;
 
 import com.iboy.game.R;
 import com.iboy.game.gui.GameActivity;
-import com.iboy.game.handlers.BitmapBank;
 import com.iboy.game.main.AppConstants;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -58,7 +53,7 @@ public class GameEngine {
     public boolean isPaused = false;
 
     private int enemy_timer = 10;
-    private int enemy_delay = 10;
+    private int enemy_delay = 5;
 
     public GameEngine(Context context) {
         enemyList = new LinkedList<Enemy>();

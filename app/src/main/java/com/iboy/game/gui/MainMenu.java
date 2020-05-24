@@ -33,6 +33,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bStartGame: startActivity(new Intent(this,GameActivity.class));
+            case R.id.bCustomize: startActivity(new Intent(this,CustomizeActivity.class));
         }
     }
 }

@@ -8,8 +8,8 @@ import com.iboy.game.main.AppConstants;
 
 public class Enemy {
     int x, y;
-    int enemySize=4;
-    double speed=10;
+    int enemySize=6;
+    double speed=5;
     boolean willHit=false;
 
     public Enemy(int x, int y) {
