@@ -29,6 +29,10 @@ public class Options
 		SharedPreferences sharedPref;
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		bulletSize=Integer.parseInt(sharedPref.getString(context.getString(R.string.bulletSize),"2"));
+		bulletSpeed=Integer.parseInt(sharedPref.getString(context.getString(R.string.bulletSpeed),"2"));
+		enemySize=Integer.parseInt(sharedPref.getString(context.getString(R.string.enemySize),"2"));
+		enemySpeed=Integer.parseInt(sharedPref.getString(context.getString(R.string.enemySpeed),"2"));
+		level=Integer.parseInt(sharedPref.getString(context.getString(R.string.level),"1"));
 		friendlyFire=Boolean.valueOf(sharedPref.getString(context.getString(R.string.friendlyFire),"false"));
 	}
 

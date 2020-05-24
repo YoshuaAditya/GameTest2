@@ -9,6 +9,7 @@ import java.util.Random;
 import com.iboy.game.R;
 import com.iboy.game.gui.GameActivity;
 import com.iboy.game.main.AppConstants;
+import com.iboy.game.main.Options;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -37,7 +38,7 @@ public class GameEngine {
     static List<Bullet> bulletRemoveList = new ArrayList<>();
     static int damage = 0;
     static int score = 0;
-    int level=1;
+    int level= Options.level;
     static final Object _sync = new Object();
     static float _lastTouchedX = 100, _lastTouchedY = AppConstants.HALFSCREEN_HEIGHT;
     Player player = new Player();

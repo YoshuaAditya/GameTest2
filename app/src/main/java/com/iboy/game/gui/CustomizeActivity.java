@@ -11,6 +11,7 @@ import android.widget.Button;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.iboy.game.R;
@@ -38,16 +39,22 @@ public class CustomizeActivity extends Activity{
 
         RecyclerView recyclerView = findViewById(R.id.optionList);
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
-        layoutManager.setFlexDirection(FlexDirection.COLUMN);
-        layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         recyclerView.setLayoutManager(layoutManager);
 
         //TODO kyke udh bisa, cuma belum semua option kusync karo variable lain dll
         OptionModel opBulletSize=new OptionModel(getString(R.string.bulletSize),Options.bulletSize+"",VIEW_SEEKBAR);
         OptionModel opBulletSpeed=new OptionModel(getString(R.string.bulletSpeed),Options.bulletSpeed+"",VIEW_SEEKBAR);
+        OptionModel opEnemySize=new OptionModel(getString(R.string.enemySize),Options.enemySize+"",VIEW_SEEKBAR);
+        OptionModel opEnemySpeed=new OptionModel(getString(R.string.enemySpeed),Options.enemySpeed+"",VIEW_SEEKBAR);
+        OptionModel opLevel=new OptionModel(getString(R.string.level),Options.level+"",VIEW_SEEKBAR);
         OptionModel opFriendlyFire=new OptionModel(getString(R.string.friendlyFire),Options.friendlyFire+"",VIEW_SWITCH);
         optionModels.add(opBulletSize);
         optionModels.add(opBulletSpeed);
+        optionModels.add(opEnemySize);
+        optionModels.add(opEnemySpeed);
+        optionModels.add(opLevel);
         optionModels.add(opFriendlyFire);
 
         OptionAdapter optionAdapter=new OptionAdapter(this,optionModels);

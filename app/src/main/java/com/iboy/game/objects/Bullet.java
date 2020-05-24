@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Bullet {
     int x, y;
-    int bulletSize= Options.bulletSize;
+    int bulletSize = Options.bulletSize;
     double speed = 4;
-    boolean willHit = false;
+    boolean willHit = false, isFriendlyFire = false;
     Enemy targetEnemy;
     int lastIndex = 0;
     Handler handler = new Handler();
@@ -34,7 +34,7 @@ public class Bullet {
             for (int i = lastIndex; i < GameEngine.enemyList.size(); i++) {
                 Enemy enemy = GameEngine.enemyList.get(i);
                 targetEnemy = enemy;
-                boolean debug = Math.abs(y - enemy.y) < bulletSize+enemy.enemySize && !enemy.willHit;
+                boolean debug = Math.abs(y - enemy.y) < bulletSize + enemy.enemySize && !enemy.willHit;
 //                Log.e("Checking", "i:" + i + " size:" + GameEngine.enemyList.size()
 //                        + " " + Bullet.this.toString() + " y check:" + debug);
 //                Log.e("Checking",this.toString());
@@ -48,7 +48,7 @@ public class Bullet {
             }
             lastIndex = GameEngine.enemyList.size();
         } else if (willHit) {
-            if(x>targetEnemy.x&& x-targetEnemy.x<bulletSize*speed+targetEnemy.enemySize*targetEnemy.speed) {
+            if (x > targetEnemy.x && x - targetEnemy.x < bulletSize * speed + targetEnemy.enemySize * targetEnemy.speed) {
 //                Log.e("Hit", Bullet.this.toString());
                 GameEngine.bulletRemoveList.add(Bullet.this);
                 GameEngine.enemyRemoveList.add(targetEnemy);
@@ -57,9 +57,11 @@ public class Bullet {
             }
         }
         //TODO nanti tambah opsi buat bullet friendly fire apa ndak
-        if (x == AppConstants.SCREEN_WIDTH){
+        if (x == AppConstants.SCREEN_WIDTH) {
             GameEngine.bulletRemoveList.add(Bullet.this);
-//            GameEngine.damage++;
+            if (isFriendlyFire) {
+                GameEngine.damage++;
+            }
         }
     }
 

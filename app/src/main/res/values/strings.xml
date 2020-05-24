@@ -13,4 +13,7 @@
     <string name="bulletSize">Bullet Size</string>
     <string name="bulletSpeed">Bullet Speed</string>
     <string name="friendlyFire">Friendly Fire</string>
+    <string name="enemySize">Enemy Size</string>
+    <string name="enemySpeed">Enemy Speed</string>
+    <string name="level">Level</string>
 </resources>

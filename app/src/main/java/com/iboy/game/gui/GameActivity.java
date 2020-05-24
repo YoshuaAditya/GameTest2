@@ -2,6 +2,7 @@ package com.iboy.game.gui;
 
 import com.iboy.game.R;
 import com.iboy.game.main.AppConstants;
+import com.iboy.game.main.Options;
 import com.iboy.game.objects.DisplayThread;
 import com.iboy.game.objects.GameEngine;
 
@@ -41,6 +42,8 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback {
         textLife = findViewById(R.id.life);
         textScore = findViewById(R.id.score);
         textLevel = findViewById(R.id.level);
+        textLevel.setText(String.valueOf(Options.level));
+
         pauseScreen = findViewById(R.id.pauseScreen);
         holder = view.getHolder();
         holder.addCallback(this);
@@ -132,16 +135,16 @@ public class GameActivity extends Activity implements SurfaceHolder.Callback {
             displayThread.start();
             AppConstants.GetEngine().isPaused = true;
             AppConstants.GetEngine().displayThread = displayThread;
-            Log.e("create1",AppConstants.GetEngine().displayThread.semaphore+"");
+//            Log.e("create1",AppConstants.GetEngine().displayThread.semaphore+"");
         } else {
             displayThread.start();
-            Log.e("create2",AppConstants.GetEngine().displayThread.semaphore+"");
+//            Log.e("create2",AppConstants.GetEngine().displayThread.semaphore+"");
         }
     }
 
     @Override
     protected void onPause() {
-        Log.e("Stop",AppConstants.GetEngine().displayThread.semaphore+"");
+//        Log.e("Stop",AppConstants.GetEngine().displayThread.semaphore+"");
         AppConstants.GetEngine().displayThread._isOnRun = false;
         AppConstants.GetEngine().displayThread.semaphore.release();
 
