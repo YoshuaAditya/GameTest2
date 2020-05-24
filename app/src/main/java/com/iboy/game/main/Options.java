@@ -10,11 +10,12 @@ import com.iboy.game.objects.GameEngine;
 
 public class Options
 {
-	static int level=1;
+	static public int level=1;
 
-	static int bulletSize=3;
-	static double bulletSpeed = 4;
+	static public int bulletSize=3;
+	static public double bulletSpeed = 4;
 
-	static int enemySize=6;
-	static double enemySpeed=5;
+	static public int enemySize=6;
+	static public double enemySpeed=5;
+	static public boolean friendlyFire=false;
 }

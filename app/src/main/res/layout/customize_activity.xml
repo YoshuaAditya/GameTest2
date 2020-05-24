@@ -1,227 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.google.android.flexbox.FlexboxLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/optionList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:flexWrap="wrap"
-        app:alignItems="flex_start"
-        app:alignContent="stretch" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/option_layout_padding"
-            android:minWidth="@dimen/option_layout_min_width"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Enemy Speed"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_flexBasisPercent="50%"
-                />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/sliderEnemySpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minWidth="@dimen/seekbar_min_width" />
-
-                <TextView
-                    android:id="@+id/optionEnemySpeed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    app:layout_flexBasisPercent="50%" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/option_layout_padding"
-            android:minWidth="@dimen/option_layout_min_width"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Enemy Size"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_flexBasisPercent="50%"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/sliderEnemySize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minWidth="@dimen/seekbar_min_width" />
-
-                <TextView
-                    android:id="@+id/optionEnemySize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    app:layout_flexBasisPercent="50%" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/option_layout_padding"
-            android:minWidth="@dimen/option_layout_min_width"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Bullet Speed"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_flexBasisPercent="50%"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/sliderBulletSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minWidth="@dimen/seekbar_min_width" />
-
-                <TextView
-                    android:id="@+id/optionBulletSpeed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    app:layout_flexBasisPercent="50%" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/option_layout_padding"
-            android:minWidth="@dimen/option_layout_min_width"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Bullet Size"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_flexBasisPercent="50%"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/sliderBulletSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minWidth="@dimen/seekbar_min_width" />
-
-                <TextView
-                    android:id="@+id/optionBulletSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    app:layout_flexBasisPercent="50%" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/option_layout_padding"
-            android:minWidth="@dimen/option_layout_min_width"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Level"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_flexBasisPercent="50%"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/sliderLevel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minWidth="@dimen/seekbar_min_width" />
-
-                <TextView
-                    android:id="@+id/optionLevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    app:layout_flexBasisPercent="50%" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="@dimen/option_layout_min_width"
-            android:orientation="vertical">
-        </LinearLayout>
-
-    </com.google.android.flexbox.FlexboxLayout>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/option_layout_padding"
+        android:gravity="center"
         android:minWidth="@dimen/option_layout_min_width"
-        android:gravity="center">
+        android:padding="@dimen/option_layout_padding">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/bApply"
-            android:text="Apply"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Apply" />
+
+        <Button
             android:id="@+id/bCancel"
-            android:text="Cancel"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
     </LinearLayout>
 
 </LinearLayout>

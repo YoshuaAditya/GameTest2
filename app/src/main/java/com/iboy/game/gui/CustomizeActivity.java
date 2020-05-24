@@ -1,37 +1,44 @@
 package com.iboy.game.gui;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.iboy.game.R;
-import com.iboy.game.main.AppConstants;
-import com.iboy.game.objects.DisplayThread;
+import com.iboy.game.main.Options;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomizeActivity extends Activity{
 
+    final int VIEW_SEEKBAR=0;
+    final int VIEW_SWITCH=1;
 
+    List<OptionModel> optionModels= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customize_activity);
+        RecyclerView recyclerView = findViewById(R.id.optionList);
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.COLUMN);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_END);
+        recyclerView.setLayoutManager(layoutManager);
+
+        //TODO setidake recycler view e wis iso, cuma perlu dicek lagi
+        OptionModel opBulletSize=new OptionModel("Bullet Size",Options.bulletSize+"",VIEW_SEEKBAR);
+        OptionModel opFriendlyFire=new OptionModel("Friendly Fire",Options.friendlyFire+"",VIEW_SWITCH);
+        optionModels.add(opBulletSize);
+        optionModels.add(opFriendlyFire);
+
+        OptionAdapter optionAdapter=new OptionAdapter(this,optionModels);
+
+        recyclerView.setAdapter(optionAdapter);
     }
 }
