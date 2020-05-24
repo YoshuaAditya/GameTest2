@@ -5,13 +5,14 @@ import android.util.Log;
 
 import com.iboy.game.gui.GameActivity;
 import com.iboy.game.main.AppConstants;
+import com.iboy.game.main.Options;
 
 import java.sql.BatchUpdateException;
 import java.util.List;
 
 public class Bullet {
     int x, y;
-    int bulletSize=3;
+    int bulletSize= Options.bulletSize;
     double speed = 4;
     boolean willHit = false;
     Enemy targetEnemy;

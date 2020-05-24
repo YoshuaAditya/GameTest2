@@ -10,6 +10,7 @@
 
     <TextView
         android:text="Option"
+        android:id="@+id/textViewOptionName"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,12 +23,12 @@
         android:gravity="center">
 
         <Switch
-            android:id="@+id/toggleSwitch"
+            android:id="@+id/switchOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/switchValue"
+            android:id="@+id/optionValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Yes"
