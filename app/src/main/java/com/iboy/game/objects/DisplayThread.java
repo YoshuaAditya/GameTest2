@@ -93,7 +93,7 @@ public class DisplayThread extends Thread {
                 else
                     Thread.sleep(LAG_PERIOD);
             } catch (InterruptedException ex) {
-                //TODO: Log
+                Log.e("DisplayThread",ex.getLocalizedMessage());
             }
             //semaphore.release used to mark end part of code needs to be stopped
             semaphore.release();

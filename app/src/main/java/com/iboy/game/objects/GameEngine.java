@@ -1,7 +1,6 @@
 package com.iboy.game.objects;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -9,23 +8,20 @@ import java.util.Random;
 
 import com.iboy.game.R;
 import com.iboy.game.gui.GameActivity;
-import com.iboy.game.handlers.BitmapBank;
 import com.iboy.game.main.AppConstants;
+import com.iboy.game.main.Options;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
@@ -42,7 +38,7 @@ public class GameEngine {
     static List<Bullet> bulletRemoveList = new ArrayList<>();
     static int damage = 0;
     static int score = 0;
-    int level=1;
+    int level= Options.level;
     static final Object _sync = new Object();
     static float _lastTouchedX = 100, _lastTouchedY = AppConstants.HALFSCREEN_HEIGHT;
     Player player = new Player();
@@ -58,7 +54,7 @@ public class GameEngine {
     public boolean isPaused = false;
 
     private int enemy_timer = 10;
-    private int enemy_delay = 10;
+    private int enemy_delay = 5;
 
     public GameEngine(Context context) {
         enemyList = new LinkedList<Enemy>();
@@ -125,7 +121,6 @@ public class GameEngine {
             @Override
             public void onClick(View v) {
                 if (!isPaused) {
-                Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //acquire permit means the thread arent allowed to run
                 try {
                     displayThread.semaphore.acquire();
@@ -134,7 +129,6 @@ public class GameEngine {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Log.e("Pause",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 }
             }
         });
@@ -150,12 +144,10 @@ public class GameEngine {
         buttonResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
                 //if there are stopped threads, make them continue
                 displayThread.semaphore.release();
                 activity.pauseScreen.setVisibility(View.INVISIBLE);
                 isPaused = false;
-                Log.e("Resume",String.valueOf(isPaused)+" Semaphore "+displayThread.semaphore);
             }
         });
         Button buttonQuit = activity.findViewById(R.id.bQuit);
@@ -210,7 +202,7 @@ public class GameEngine {
         enemyRemoveList.clear();
         //TODO hmm, enaknya gmn ya, biarin spam shot tapi dibuat susah, apa consequence dari too many shots.
         //TODO klo up down dipencet spesifik caranya, bisa nambah speed,cuma ini mau fitur apa bug
-        //TODO skor,coba opsi + button\
+        //TODO implementasi options
         updateLife();
         updateScore();
         setButtons();

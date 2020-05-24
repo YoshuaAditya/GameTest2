@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.iboy.game.R;
 import com.iboy.game.main.AppConstants;
+import com.iboy.game.main.Options;
 
 public class MainMenu extends Activity implements View.OnClickListener {
 
@@ -27,12 +28,16 @@ public class MainMenu extends Activity implements View.OnClickListener {
             v = group.getChildAt(i);
             if(v instanceof Button) v.setOnClickListener(this);
         }
+
+        //check previous options if available
+        Options.updateOptions(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bStartGame: startActivity(new Intent(this,GameActivity.class));
+            case R.id.bStartGame: startActivity(new Intent(this,GameActivity.class));break;
+            case R.id.bCustomize: startActivity(new Intent(this,CustomizeActivity.class));break;
         }
     }
 }
