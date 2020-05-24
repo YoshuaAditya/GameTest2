@@ -210,7 +210,7 @@ public class GameEngine {
         enemyRemoveList.clear();
         //TODO hmm, enaknya gmn ya, biarin spam shot tapi dibuat susah, apa consequence dari too many shots.
         //TODO klo up down dipencet spesifik caranya, bisa nambah speed,cuma ini mau fitur apa bug
-        //TODO skor,coba opsi + button\
+        //TODO implementasi options
         updateLife();
         updateScore();
         setButtons();
