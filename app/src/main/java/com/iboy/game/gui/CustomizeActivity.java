@@ -43,17 +43,21 @@ public class CustomizeActivity extends Activity{
         layoutManager.setJustifyContent(JustifyContent.FLEX_START);
         recyclerView.setLayoutManager(layoutManager);
 
-        //TODO kyke udh bisa, cuma belum semua option kusync karo variable lain dll
+        //TODO add here. then options.update
         OptionModel opBulletSize=new OptionModel(getString(R.string.bulletSize),Options.bulletSize+"",VIEW_SEEKBAR);
         OptionModel opBulletSpeed=new OptionModel(getString(R.string.bulletSpeed),Options.bulletSpeed+"",VIEW_SEEKBAR);
         OptionModel opEnemySize=new OptionModel(getString(R.string.enemySize),Options.enemySize+"",VIEW_SEEKBAR);
         OptionModel opEnemySpeed=new OptionModel(getString(R.string.enemySpeed),Options.enemySpeed+"",VIEW_SEEKBAR);
+        OptionModel opEnemyDelay=new OptionModel(getString(R.string.enemyDelay),Options.enemyDelay+"",VIEW_SEEKBAR);
+        OptionModel opEnemyLife=new OptionModel(getString(R.string.enemyLife),Options.enemyLife+"",VIEW_SEEKBAR);
         OptionModel opLevel=new OptionModel(getString(R.string.level),Options.level+"",VIEW_SEEKBAR);
         OptionModel opFriendlyFire=new OptionModel(getString(R.string.friendlyFire),Options.friendlyFire+"",VIEW_SWITCH);
         optionModels.add(opBulletSize);
         optionModels.add(opBulletSpeed);
         optionModels.add(opEnemySize);
         optionModels.add(opEnemySpeed);
+        optionModels.add(opEnemyDelay);
+        optionModels.add(opEnemyLife);
         optionModels.add(opLevel);
         optionModels.add(opFriendlyFire);
 

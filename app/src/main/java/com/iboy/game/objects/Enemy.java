@@ -1,5 +1,6 @@
 package com.iboy.game.objects;
 
+import android.graphics.Path;
 import android.os.Handler;
 import android.util.Log;
 
@@ -12,10 +13,18 @@ public class Enemy {
     int enemySize= Options.enemySize;
     double speed=Options.enemySpeed;
     boolean willHit=false;
+    int life= Options.enemyLife;
+    int bulletIncoming=0;
 
     public Enemy(int x, int y) {
         this.x=x;
         this.y=y;
+    }
+
+    public void checkLife(){
+        life--;
+        if (life<1)
+            willHit=true;
     }
 
     public void checkXPosition(){

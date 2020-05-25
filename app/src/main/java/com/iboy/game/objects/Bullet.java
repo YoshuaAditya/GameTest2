@@ -34,24 +34,26 @@ public class Bullet {
             for (int i = lastIndex; i < GameEngine.enemyList.size(); i++) {
                 Enemy enemy = GameEngine.enemyList.get(i);
                 targetEnemy = enemy;
-                boolean debug = Math.abs(y - enemy.y) < bulletSize + enemy.enemySize && !enemy.willHit;
 //                Log.e("Checking", "i:" + i + " size:" + GameEngine.enemyList.size()
 //                        + " " + Bullet.this.toString() + " y check:" + debug);
 //                Log.e("Checking",this.toString());
-                if (debug) {
+                if (willHitFormula2(enemy)) {
                     willHit = true;
-                    enemy.willHit = true;
                     targetEnemy = enemy;
+                    targetEnemy.bulletIncoming++;
+                    if(targetEnemy.bulletIncoming==targetEnemy.life)
+                        targetEnemy.willHit=true;
 //                    Log.e("Will Hit", Bullet.this.toString());
                     break;
                 }
             }
             lastIndex = GameEngine.enemyList.size();
         } else if (willHit) {
-            if (x > targetEnemy.x && x - targetEnemy.x < bulletSize * speed + targetEnemy.enemySize * targetEnemy.speed) {
-//                Log.e("Hit", Bullet.this.toString());
+            if (x + bulletSize> targetEnemy.x) {
+//                Log.e("Hit", Bullet.this.toString());&& x - targetEnemy.x < bulletSize * speed + targetEnemy.enemySize * targetEnemy.speed
+//                damageFormula1();
+                damageFormula2();
                 GameEngine.bulletRemoveList.add(Bullet.this);
-                GameEngine.enemyRemoveList.add(targetEnemy);
                 GameEngine.score++;
                 Bullet.this.reset();
             }
@@ -65,8 +67,29 @@ public class Bullet {
         }
     }
 
+    private void damageFormula2() {
+        targetEnemy.life--;
+        targetEnemy.enemySize--;
+        if(targetEnemy.life<1) {
+            GameEngine.enemyRemoveList.add(targetEnemy);
+            targetEnemy.willHit = false;
+        }
+    }
+
+    private void damageFormula1() {
+        GameEngine.enemyRemoveList.add(targetEnemy);
+    }
+
     private void reset() {
         willHit = false;
+    }
+
+    public boolean willHitFormula1(Enemy enemy){
+        return Math.abs(y - enemy.y) < bulletSize + enemy.enemySize && !enemy.willHit;
+    }
+
+    public boolean willHitFormula2(Enemy enemy){
+        return Math.abs(y - enemy.y) < bulletSize && !enemy.willHit && enemy.x>x;
     }
 
     @Override

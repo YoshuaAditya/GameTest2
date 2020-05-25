@@ -54,7 +54,7 @@ public class GameEngine {
     public boolean isPaused = false;
 
     private int enemy_timer = 10;
-    private int enemy_delay = 5;
+    private int enemy_delay = Options.enemyDelay;
 
     public GameEngine(Context context) {
         enemyList = new LinkedList<Enemy>();

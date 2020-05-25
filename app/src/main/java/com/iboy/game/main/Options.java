@@ -23,6 +23,8 @@ public class Options
 
 	static public int enemySize=6;
 	static public int enemySpeed=5;
+	static public int enemyDelay=50;
+	static public int enemyLife=4;
 	static public boolean friendlyFire=false;
 
 	static public void updateOptions(Context context){
@@ -32,6 +34,8 @@ public class Options
 		bulletSpeed=Integer.parseInt(sharedPref.getString(context.getString(R.string.bulletSpeed),"2"));
 		enemySize=Integer.parseInt(sharedPref.getString(context.getString(R.string.enemySize),"2"));
 		enemySpeed=Integer.parseInt(sharedPref.getString(context.getString(R.string.enemySpeed),"2"));
+		enemyDelay=Integer.parseInt(sharedPref.getString(context.getString(R.string.enemyDelay),"50"));
+		enemyLife=Integer.parseInt(sharedPref.getString(context.getString(R.string.enemyLife),"4"));
 		level=Integer.parseInt(sharedPref.getString(context.getString(R.string.level),"1"));
 		friendlyFire=Boolean.valueOf(sharedPref.getString(context.getString(R.string.friendlyFire),"false"));
 	}
