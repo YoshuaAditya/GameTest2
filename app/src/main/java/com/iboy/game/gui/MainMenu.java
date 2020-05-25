@@ -38,6 +38,7 @@ public class MainMenu extends Activity implements View.OnClickListener {
         switch (v.getId()){
             case R.id.bStartGame: startActivity(new Intent(this,GameActivity.class));break;
             case R.id.bCustomize: startActivity(new Intent(this,CustomizeActivity.class));break;
+            case R.id.bShop: startActivity(new Intent(this,ShopActivity.class));break;
         }
     }
 }

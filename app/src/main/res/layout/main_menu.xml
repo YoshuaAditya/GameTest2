@@ -33,6 +33,12 @@
         android:text="@string/customize" />
 
     <Button
+        android:id="@+id/bSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings" />
+
+    <Button
         android:id="@+id/bAbout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

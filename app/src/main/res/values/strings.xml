@@ -18,4 +18,5 @@
     <string name="level">Level</string>
     <string name="enemyDelay">Enemy Delay</string>
     <string name="enemyLife">Enemy Life</string>
+    <string name="settings">Settings</string>
 </resources>
