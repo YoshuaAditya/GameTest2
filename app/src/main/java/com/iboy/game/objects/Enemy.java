@@ -8,23 +8,19 @@ import com.iboy.game.gui.GameActivity;
 import com.iboy.game.main.AppConstants;
 import com.iboy.game.main.Options;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Enemy {
     int x, y;
     int enemySize= Options.enemySize;
     double speed=Options.enemySpeed;
     boolean willHit=false;
     int life= Options.enemyLife;
-    int bulletIncoming=0;
 
     public Enemy(int x, int y) {
         this.x=x;
         this.y=y;
-    }
-
-    public void checkLife(){
-        life--;
-        if (life<1)
-            willHit=true;
     }
 
     public void checkXPosition(){

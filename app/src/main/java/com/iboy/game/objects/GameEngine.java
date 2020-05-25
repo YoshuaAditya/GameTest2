@@ -13,6 +13,7 @@ import com.iboy.game.main.Options;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Path;
 import android.os.Handler;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -179,6 +180,7 @@ public class GameEngine {
                 }
             }
         });
+        enemy_delay = Options.enemyDelay;
     }
 
     Paint _paint;
