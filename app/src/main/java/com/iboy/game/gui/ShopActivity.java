@@ -101,6 +101,7 @@ public class ShopActivity extends Activity {
         }
         else {
             Log.e("Shop","Not enough funds");
+            //TODO funds disimpen di sharedpref, trus mulai coba ennemy kill gives funds
         }
     }
 
